@@ -5,6 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/Balashiha/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
+    <script src="https://api-maps.yandex.ru/v3/?apikey=bc775698-37d5-4d2b-94fc-c4cf1052fb36&lang=ru_RU"></script>
     <script type="module" crossorigin src="/Balashiha/assets/index-Dckl3sEY.js"></script>
     <link rel="stylesheet" crossorigin href="/Balashiha/assets/index-ClVTL6Yg.css">
   </head>
@@ -98,6 +99,7 @@
           </div>
         </div>
       </div>
+      <div id="map" style="width: 600px; height: 400px"></div>
       <div class="W_ProjectInfo">
         <div class="M_ProjectInfoItem">
           <div class="A_SmallTitle">Готовность</div>
@@ -951,5 +953,37 @@
           </div>
       </div>
   </div>
+  <script>
+    initMap();
+
+async function initMap() {
+    // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
+    await ymaps3.ready;
+
+    const {YMap, YMapDefaultSchemeLayer} = ymaps3;
+
+    // Иницилиазируем карту
+    const map = new YMap(
+        // Передаём ссылку на HTMLElement контейнера
+        document.getElementById('map'),
+
+        // Передаём параметры инициализации карты
+        {
+            location: {
+                // Координаты центра карты
+                center: [37.588144, 55.733842],
+
+                // Уровень масштабирования
+                zoom: 10
+            }
+        }
+    );
+
+    // Добавляем слой для отображения схематической карты
+    map.addChild(new YMapDefaultSchemeLayer());
+}
+  console.log('test')
+
+  </script>
   </body>
 </html>
