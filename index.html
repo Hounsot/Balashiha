@@ -961,6 +961,8 @@
     await ymaps3.ready;
 
     const {YMap, YMapDefaultSchemeLayer} = ymaps3;
+    const marker = await ymaps3.import('@yandex/ymaps3-markers@0.0.1');
+            const { YMapMarker } = marker;
 
     // Иницилиазируем карту
     const map = new YMap(
@@ -988,7 +990,7 @@ markerElement.className = 'custom-marker';
 markerElement.innerHTML = 'TESTTESTETSTEST';
 
 // Create and add the marker
-const marker = new YMapMarker(
+const customMarker = new YMapMarker(
     {
         coordinates: [37.938118, 55.797007],
         draggable: false
@@ -996,7 +998,7 @@ const marker = new YMapMarker(
     markerElement
 );
 
-map.addChild(marker);
+map.addChild(customMarker);
 }
 
 
