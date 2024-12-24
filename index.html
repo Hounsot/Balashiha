@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
     <script src="https://api-maps.yandex.ru/v3/?apikey=bc775698-37d5-4d2b-94fc-c4cf1052fb36&lang=ru_RU"></script>
-    <script type="module" crossorigin src="/Balashiha/assets/index-Dckl3sEY.js"></script>
-    <link rel="stylesheet" crossorigin href="/Balashiha/assets/index-ClVTL6Yg.css">
+    <script type="module" crossorigin src="/Balashiha/assets/index-FoUeZmqC.js"></script>
+    <link rel="stylesheet" crossorigin href="/Balashiha/assets/index-DFI1Vrkv.css">
   </head>
   <body>
     <div class="O_BurgerMenu">
@@ -990,26 +990,15 @@
                     location: LOCATION
                 }
             );
-
+            
             // Add map layers
             map.addChild(new YMapDefaultSchemeLayer());
             map.addChild(new YMapDefaultFeaturesLayer());
 
-            // Add controls
-            map.addChild(
-                new YMapControls({ position: 'right' })
-                    .addChild(new YMapZoomControl({}))
-            );
-            
-            map.addChild(
-                new YMapControls({ position: 'top right' })
-                    .addChild(new YMapGeolocationControl({}))
-            );
-
             // Create custom marker
             const markerElement = document.createElement('div');
             markerElement.className = 'custom-marker';
-            markerElement.innerHTML = 'TESTTESTETSTEST';
+            markerElement.innerHTML = '<img stlye="height:63.97px; width: 54px;" src="https://optim.tildacdn.com/tild3737-6465-4262-b330-626439616235/-/resize/432x/-/format/webp/MapLogo.png" alt="">';
             
             // Create marker title
             const markerTitle = document.createElement('div');
