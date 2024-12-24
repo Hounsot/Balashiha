@@ -955,9 +955,8 @@
   </div>
   <script>
     initMap();
-
-async function initMap() {
-  console.log('test')
+    async function initMap() {
+    console.log('test')
     // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
     await ymaps3.ready;
 
@@ -7856,6 +7855,33 @@ async function initMap() {
     }
 ]
     }));
+    var MyBalloonLayout = ymaps.templateLayoutFactory.createClass(
+                '<div class="custom-marker">' +
+                    '<div class="marker-title">Custom Location</div>' +
+                    '<div class="marker-content">' +
+                        'Address: 123 Street<br>' +
+                        'Rating: ⭐⭐⭐⭐⭐' +
+                    '</div>' +
+                '</div>'
+            );
+
+            // Create a placemark with custom layout
+            var myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+                // Placemark data if needed
+                hintContent: 'Custom HTML Marker'
+            }, {
+                // Using custom layout
+                iconLayout: MyBalloonLayout,
+                // Offset to position the marker correctly
+                iconOffset: [-75, -70],
+                // Optional: Hide the default balloon
+                hideIconOnBalloonOpen: false,
+                balloonOffset: [0, 0]
+            });
+
+            // Add placemark to the map
+            myMap.geoObjects.add(myPlacemark);
+
 }
 
 
