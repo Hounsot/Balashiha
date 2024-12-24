@@ -954,56 +954,89 @@
       </div>
   </div>
   <script>
-    initMap();
-    async function initMap() {
-    console.log('test')
-    // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
-    await ymaps3.ready;
-    const {YMap, YMapDefaultSchemeLayer} = ymaps3;
-
-    const modules = await Promise.all([
-                ymaps3.import('@yandex/ymaps3-markers@0.0.1'),
-                ymaps3.import('@yandex/ymaps3-clusterer@0.0.1'),
-            ]);
+        let map = null;
+        
+        main();
+        
+        async function main() {
+            await ymaps3.ready;
             
-            const [markers, clusterer] = modules;
+            // Import required modules
+            const {
+                YMap,
+                YMapDefaultSchemeLayer,
+                YMapControls,
+                YMapDefaultFeaturesLayer,
+                YMapMarker
+            } = ymaps3;
 
-    // Иницилиазируем карту
-    const map = new YMap(
-        // Передаём ссылку на HTMLElement контейнера
-        document.getElementById('map'),
+            const {
+                YMapZoomControl,
+                YMapGeolocationControl
+            } = await ymaps3.import('@yandex/ymaps3-controls@0.0.1');
 
-        // Передаём параметры инициализации карты
-        {
-            location: {
-                // Координаты центра карты
-                center: [37.938118, 55.797007],
-
-                // Уровень масштабирования
+            // Define coordinates
+            const CENTER_COORDINATES = [37.938118, 55.797007];
+            const MARKER_COORDINATES = [37.938118, 55.797007];
+            const LOCATION = {
+                center: CENTER_COORDINATES,
                 zoom: 10
-            }
+            };
+
+            // Initialize map
+            map = new YMap(
+                document.getElementById('map'),
+                {
+                    location: LOCATION
+                }
+            );
+
+            // Add map layers
+            map.addChild(new YMapDefaultSchemeLayer());
+            map.addChild(new YMapDefaultFeaturesLayer());
+
+            // Add controls
+            map.addChild(
+                new YMapControls({ position: 'right' })
+                    .addChild(new YMapZoomControl({}))
+            );
+            
+            map.addChild(
+                new YMapControls({ position: 'top right' })
+                    .addChild(new YMapGeolocationControl({}))
+            );
+
+            // Create custom marker
+            const markerElement = document.createElement('div');
+            markerElement.className = 'custom-marker';
+            markerElement.innerHTML = 'TESTTESTETSTEST';
+            
+            // Create marker title
+            const markerTitle = document.createElement('div');
+            markerTitle.className = 'marker-title';
+            markerTitle.innerHTML = 'Custom Marker';
+
+            // Create container for marker elements
+            const markerContainer = document.createElement('div');
+            markerContainer.appendChild(markerElement);
+            markerContainer.appendChild(markerTitle);
+
+            // Add click handler
+            markerContainer.onclick = () => {
+                map.update({
+                    location: {
+                        ...LOCATION,
+                        duration: 400
+                    }
+                });
+            };
+
+            // Add marker to map
+            map.addChild(new YMapMarker(
+                { coordinates: MARKER_COORDINATES },
+                markerContainer
+            ));
         }
-    );
-
-    // Добавляем слой для отображения схематической карты
-    map.addChild(new YMapDefaultSchemeLayer());
-
-// Create custom marker element
-const markerElement = document.createElement('div');
-markerElement.className = 'custom-marker';
-markerElement.innerHTML = 'TESTTESTETSTEST';
-
-// Create marker using markers.createMarker
-const marker = markers.createMarker({
-    coordinates: [37.938118, 55.797007],
-    element: markerElement
-});
-
-// Add marker to the map
-map.addChild(marker);
-}
-
-
   </script>
   </body>
 </html>
