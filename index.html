@@ -1019,11 +1019,11 @@
                 { coordinates: MARKER_COORDINATES },
                 markerContainer
             ));
+            let MapMarkerImage = document.querySelector('#MapMarker')
+            MapMarkerImage.style.transform = 'translateY(-64px)';
         }
         // everything else:
         document.addEventListener('DOMContentLoaded', () => {
-            let MapMarkerImage = document.querySelector('#MapMarker')
-            MapMarkerImage.style.transform = 'translateY(-64px)';
     let burgerMenu = document.querySelector('.O_BurgerMenu')
     let burgerMenuList = document.querySelector('.W_BurgerMenuList')
     document.querySelector('.A_BurgerMenuButton').addEventListener('click', function () {
