@@ -959,10 +959,14 @@
     console.log('test')
     // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
     await ymaps3.ready;
-
     const {YMap, YMapDefaultSchemeLayer} = ymaps3;
-    const marker = await ymaps3.import('@yandex/ymaps3-markers@0.0.1');
-            const { YMapMarker } = marker;
+
+    const modules = await Promise.all([
+                ymaps3.import('@yandex/ymaps3-markers@0.0.1'),
+                ymaps3.import('@yandex/ymaps3-clusterer@0.0.1'),
+            ]);
+            
+            const [markers, clusterer] = modules;
 
     // Иницилиазируем карту
     const map = new YMap(
@@ -989,16 +993,14 @@ const markerElement = document.createElement('div');
 markerElement.className = 'custom-marker';
 markerElement.innerHTML = 'TESTTESTETSTEST';
 
-// Create and add the marker
-const customMarker = new YMapMarker(
-    {
-        coordinates: [37.938118, 55.797007],
-        draggable: false
-    },
-    markerElement
-);
+// Create marker using markers.createMarker
+const marker = markers.createMarker({
+    coordinates: [37.938118, 55.797007],
+    element: markerElement
+});
 
-map.addChild(customMarker);
+// Add marker to the map
+map.addChild(marker);
 }
 
 
