@@ -7675,6 +7675,7 @@
     });
     let listOfCards = document.querySelector('#U_Cards');
     let currentPosition = 0;
+    let swipeNumber = 0;
     listOfCards.style.left = currentPosition
     document.querySelector('.U_Left').addEventListener('click', function () {
         console.log('test')
@@ -7686,17 +7687,43 @@
             console.log('Нельзя')
         }
     });
-    document.querySelector('.U_Right').addEventListener('click', function () {
-        console.log(currentPosition, -listOfCards.offsetWidth)
-        // if (currentPosition > (-listOfCards.offsetWidth + (listOfCards.childNodes[1].offsetWidth * 3) + (2 * 3))){
-        if (currentPosition > -(listOfCards.offsetWidth + listOfCards.childNodes[1].offsetWidth)) {
+        document.querySelector('.U_Right').addEventListener('click', function () {
+            const divs = Array.from(listOfCards.children).filter(el => el.tagName === 'DIV');
+            console.log(divs)
+            const elementToClone = divs[swipeNumber];
+            const clone = elementToClone.cloneNode(true);
+            listOfCards.appendChild(clone);
+            swipeNumber += 1;
             currentPosition -= listOfCards.childNodes[1].offsetWidth + 2
             listOfCards.style.left = `${currentPosition}px`
-            console.log('left', listOfCards.childNodes[1].offsetWidth, currentPosition)
-        } else {
-            console.log('Нельзя')
-        }
+            const DesktopCards = document.querySelectorAll('.U_DesktopCard');
+            DesktopCards.forEach(card => {
+        card.addEventListener('mouseenter', (e) => {
+            e.target.children[0].classList.add('U_HoverAnimationOpen')
+            e.target.children[0].children[1]
+            e.target.children[0].children[1].classList.add('U_TextInCardOpacity')
+            e.target.children[0].children[0].children[1].classList.add('A_PlusButtonHover')
+        })
+        card.addEventListener('mouseleave', (e) => {
+            e.target.children[0].classList.remove('U_HoverAnimationOpen')
+            e.target.children[0].children[1]
+            e.target.children[0].children[1].classList.remove('U_TextInCardOpacity')
+            e.target.children[0].children[0].children[1].classList.remove('A_PlusButtonHover')
+
+        })
     });
+        })
+    // document.querySelector('.U_Right').addEventListener('click', function () {
+    //     console.log(currentPosition, -listOfCards.offsetWidth)
+    //     // if (currentPosition > (-listOfCards.offsetWidth + (listOfCards.childNodes[1].offsetWidth * 3) + (2 * 3))){
+    //     if (currentPosition > -(listOfCards.offsetWidth + listOfCards.childNodes[1].offsetWidth)) {
+    //         currentPosition -= listOfCards.childNodes[1].offsetWidth + 2
+    //         listOfCards.style.left = `${currentPosition}px`
+    //         console.log('left', listOfCards.childNodes[1].offsetWidth, currentPosition)
+    //     } else {
+    //         console.log('Нельзя')
+    //     }
+    // });
     const DesktopCards = document.querySelectorAll('.U_DesktopCard');
     DesktopCards.forEach(card => {
         card.addEventListener('mouseenter', (e) => {
